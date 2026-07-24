@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "tasmil-ai"
+version = "0.1.0"
+description = "Tasmil agent runner"
+authors = ["Tasmil <engineering@tasmil.dev>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12,<4.0"
+fastapi = ">=0.115"
+uvicorn = { extras = ["standard"], version = ">=0.34" }
+pydantic = ">=2.10"
+pydantic-settings = ">=2.7"
+structlog = ">=25.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.3"
+pytest-cov = ">=6.0"
+httpx = ">=0.28"
+ruff = ">=0.9"
+
+[build-system]
+requires = ["poetry-core>=2.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["app"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "S", "UP"]
+ignore = ["S104"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]

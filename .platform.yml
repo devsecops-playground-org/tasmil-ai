@@ -1,0 +1,31 @@
+project: tasmil
+component: ai
+type: service
+runtime: python
+package_manager: poetry
+
+test:
+  command: poetry run pytest --cov=app --cov-report=json --cov-report=term-missing
+  lint: poetry run ruff check .
+  coverage_min: 70
+  ai_review: true
+
+build:
+  dockerfile: Dockerfile
+  context: .
+
+deploy:
+  target: vm
+  service: ai
+  container_name: tasmil-ai
+  compose_file: docker-compose.prod.yml
+  health:
+    path: /health
+    port: 8000
+  environments:
+    staging:
+      branch: deploy/staging
+      url: https://ai.staging.tasmil.dev
+    production:
+      branch: deploy/prod
+      url: https://ai.tasmil.dev

@@ -1,0 +1,25 @@
+# Shipped to /opt/tasmil/ai on the shared Tasmil VM. Recreating this service
+# leaves backend and mcp — which live in their own directories on the same box —
+# running untouched.
+name: tasmil-ai
+
+services:
+  ai:
+    image: ${IMAGE}
+    container_name: tasmil-ai
+    restart: unless-stopped
+    env_file: [.env]
+    environment:
+      APP_ENV: production
+    ports:
+      - "8000:8000"
+    networks: [tasmil_net]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  tasmil_net:
+    external: true

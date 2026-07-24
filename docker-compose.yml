@@ -1,0 +1,13 @@
+name: tasmil-ai-dev
+
+services:
+  ai:
+    build:
+      context: .
+      target: runtime
+    image: tasmil-ai:dev
+    container_name: tasmil-ai-dev
+    restart: unless-stopped
+    env_file: [.env]
+    ports:
+      - "8000:8000"
